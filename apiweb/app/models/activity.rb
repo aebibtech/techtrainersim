@@ -1,6 +1,7 @@
 class Activity < ApplicationRecord
     belongs_to :category
-
+    has_many :activity_steps
+    
     # Validations
     VALID_IMAGE_REGEX = /^.+\.(jpg|jpeg|png|gif|bmp)$/
     validates :activity_name, :description, presence: true, length: { minimum: 3 }
