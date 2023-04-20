@@ -33,4 +33,24 @@ RSpec.describe User, type: :model do
             expect(build(:user, password: "!@#$%^&*")).to be_invalid
         end
     end
+    context "with valid credentials" do
+        it "should be able to return the user" do
+            user = create(:user)
+            expect(User.login(user.username, user.password).username).to eql(user.username)
+        end
+    end
+    context "with invalid credentials" do
+        it "should return an error message if the username does not exist" do
+            create(:user)
+            expect(User.login("aebibtech", "password123")).to eql("Invalid username or password")
+        end
+        it "should return an error message if the username or password is blank" do
+            expect(User.login("aebibtech", "")).to eql("Username or password can't be blank")
+            expect(User.login("", "password123")).to eql("Username or password can't be blank")
+        end
+        it "should return an error message if the password is incorrect" do
+            user = create(:user)
+            expect(User.login(user.username, "password123")).to eql("Invalid username or password")
+        end
+    end
 end
