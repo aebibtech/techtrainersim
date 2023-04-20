@@ -1,6 +1,7 @@
 class Activity < ApplicationRecord
     belongs_to :category
     has_many :activity_steps
+    has_many :learning_progresses
     
     # Validations
     VALID_IMAGE_REGEX = /^.+\.(jpg|jpeg|png|gif|bmp)$/

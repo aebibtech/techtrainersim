@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_092607) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_095815) do
   create_table "activities", force: :cascade do |t|
     t.integer "category_id", null: false
     t.string "activity_name"
@@ -39,6 +39,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_092607) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "learning_progresses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "activity_id", null: false
+    t.integer "current_step"
+    t.boolean "is_completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_learning_progresses_on_activity_id"
+    t.index ["user_id"], name: "index_learning_progresses_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -52,4 +63,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_092607) do
 
   add_foreign_key "activities", "categories"
   add_foreign_key "activity_steps", "activities"
+  add_foreign_key "learning_progresses", "activities"
+  add_foreign_key "learning_progresses", "users"
 end
