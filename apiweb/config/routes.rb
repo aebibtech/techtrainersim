@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      # Activities API routes
+      get 'activities' => 'activities#index'
+      get 'activities/:id' => 'activities#show'
+      post 'activities' => 'activities#create'
+      put 'activities/:id' => 'activities#update'
+      delete 'activities/:id' => 'activities#delete'
+
       # Categories API routes
       get 'categories' => 'categories#index'
       get 'categories/:id' => 'categories#show'
