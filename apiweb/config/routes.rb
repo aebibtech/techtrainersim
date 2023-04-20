@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      # Categories API routes
+      get 'categories' => 'categories#index'
+      get 'categories/:id' => 'categories#show'
+      post 'categories' => 'categories#create'
+      patch 'categories/:id' => 'categories#update'
+
+      # Users API routes
       get 'users/:username' => 'users#show'
       get 'users/:username/progresses' => 'users#learning_progresses'
       post 'users' => 'users#create'
