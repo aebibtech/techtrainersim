@@ -16,8 +16,13 @@ class AdminController < ApplicationController
                 session[:error] = result
                 redirect_to "/admin"
             else
-                session[:username] = result.username
-                redirect_to "/activities"
+                if result.user_level == 9
+                    session[:username] = result.username
+                    redirect_to "/activities"
+                else
+                    session.clear
+                    redirect_to "/admin"
+                end
             end
         end
     end
