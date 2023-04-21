@@ -1,11 +1,10 @@
 class AdminController < ApplicationController
-    layout "application", only: [:index]
     layout "dashboard"
-
     def index
         if session[:username] != nil
             redirect_to "/activities"
         end
+        render layout: "admin"
     end
 
     def process_login
