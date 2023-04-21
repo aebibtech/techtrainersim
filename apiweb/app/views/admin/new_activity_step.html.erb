@@ -1,0 +1,35 @@
+<a class="d-block mt-2 mb-3" href="/activities/<%= @activity.id %>/view"><i class="bi bi-arrow-left" style="margin-right: 6px;"></i>Back to <%= @activity.activity_name %></a>
+<h2 class="mt-2 mb-3">New Step for <%= @activity.activity_name %></h2>
+<div class="row">
+    <div class="col col-md-4">
+        <form action="/activities/<%= @activity.id %>/steps" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <label class="form-label" for="step_name">Step name</label>
+            <input class="form-control mb-3" type="text" name="step_name" id="step_name">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control mb-3" style="resize: none;" name="description" id="description"></textarea>
+            <label class="form-label" for="step_number">Step number</label>
+            <input class="form-control mb-3" type="number" min="1" name="step_number" id="step_number">
+            <label class="form-label" for="image">Step Image</label>
+            <input class="form-control mb-3" type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif">
+            <div class="mb-3">
+                <input class="btn btn-success" type="submit" value="Create">
+            </div>
+            <% flash[:errors].each do |e| %>
+            <p class="text-danger"><%= e %></p>
+            <% end if flash[:errors] != nil %>
+        </form>
+    </div>
+    <div class="col col-md-8">
+        <img class="d-block mx-auto border border-dark shadow-lg w-75" id="image-preview" src="/assets/placeholder.png" alt="Preview image">
+    </div>
+</div>
+<script>
+    $('#image').change(function(){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $("#image-preview").attr("src", reader.result);
+        };
+        reader.readAsDataURL($(this).get(0).files[0]);
+    });
+</script>

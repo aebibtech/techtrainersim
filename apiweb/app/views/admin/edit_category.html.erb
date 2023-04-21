@@ -1,0 +1,17 @@
+<a class="d-block mt-2 mb-3" href="/categories/<%= @category.id %>/view"><i class="bi bi-arrow-left" style="margin-right: 6px;"></i>Back to <%= @category.category_name %></a>
+<h2 class="mt-2 mb-3">Edit Category "<%= @category.category_name %>"</h2>
+<form class="w-25" action="/categories/<%= @category.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="put">
+    <label class="form-label mb-3" for="category_name">Category name</label>
+    <input class="form-control mb-3" type="text" name="category_name" id="category_name" value="<%= @category.category_name %>">
+    <div class="mb-3">
+        <input class="btn btn-success" type="submit" value="Update">
+    </div>
+    <% if flash[:success] != nil %>
+    <p class="text-success"><%= flash[:success] %></p>
+    <% end %>
+    <% flash[:errors].each do |e| %>
+    <p class="text-danger"><%= e %></p>
+    <% end if flash[:errors] != nil %>
+</form>

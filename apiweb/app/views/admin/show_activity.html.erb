@@ -1,0 +1,30 @@
+<a class="d-block mt-2 mb-3" href="/activities"><i class="bi bi-arrow-left" style="margin-right: 6px;"></i>Back to Activities</a>
+<h2 class="fs-2 mt-2" id="activity_name"><%= @activity.activity_name %> <a class="btn btn-primary" href="/activities/<%= @activity.id %>/edit">Edit</a></h2>
+<p class="lead mb-3">Category: <a href="/categories/<%= @activity.category.id %>/view"><%= @activity.category.category_name %></a></p>
+<p>Reward: <%= @activity.reward %> &#11088;</p>
+<p>Date Created: <%= @activity.created_at.strftime("%b %d, %Y") %></p>
+<p>Last Updated: <%= @activity.updated_at.strftime("%b %d, %Y") %></p>
+<h3 class="mt-2 mb-3">Steps in this learning activity</h3>
+<table class="table">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>No.</th>
+            <th>Step Name</th>
+            <th>Date Created</th>
+            <th>Last Updated</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @activity.activity_steps.order("step_number ASC").each do |acs| %>
+        <tr>
+            <td><%= acs.step_number %></td>
+            <td><a href="/activitysteps/<%= acs.id %>"><%= acs.step_name %></a></td>
+            <td><%= acs.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= acs.updated_at.strftime("%b %d, %Y") %></td>
+            <td><a href="/activitysteps/<%= acs.id %>">Edit</a> <a href="/activitysteps/<%= acs.id %>/destroy">Delete</a></td>
+        </tr>
+    <% end if @activity.activity_steps.length > 0 %>
+    </tbody>
+</table>
+<a class="btn btn-success" href="/activities/<%= @activity.id %>/steps/new"><i class="bi bi-plus"></i> Add new step</a>
