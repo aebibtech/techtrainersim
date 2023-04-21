@@ -1,0 +1,40 @@
+<h2 class="mt-2 mb-3">New Learning Activity</h2>
+<div class="row">
+    <div class="col col-md-4">
+        <form action="/activities" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <label class="form-label" for="activity_name">Activity name</label>
+            <input class="form-control mb-3" type="text" name="activity_name" id="activity_name">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control mb-3" style="resize: none;" name="description" id="description"></textarea>
+            <label class="form-label" for="reward">Reward &#11088;</label>
+            <input class="form-control mb-3" type="number" min="1" name="reward" id="reward">
+            <label class="form-label" for="category_id">Category</label>
+            <select class="form-select mb-3" name="category_id" id="category_id">
+                <% @categories.each do |cat| %>
+                <option value="<%= cat.id %>"><%= cat.category_name %></option>
+                <% end %>
+            </select>
+            <label class="form-label" for="image">Display Image</label>
+            <input class="form-control mb-3" type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif">
+            <div class="mb-3">
+                <input class="btn btn-success" type="submit" value="Create">
+            </div>
+            <% flash[:errors].each do |e| %>
+            <p class="text-danger"><%= e %></p>
+            <% end if flash[:errors] != nil %>
+        </form>
+    </div>
+    <div class="col col-md-8">
+        <img class="d-block mx-auto border border-dark shadow-lg w-75" id="image-preview" src="/assets/placeholder.png" alt="Preview image">
+    </div>
+</div>
+<script>
+    $('#image').change(function(){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $("#image-preview").attr("src", reader.result);
+        };
+        reader.readAsDataURL($(this).get(0).files[0]);
+    });
+</script>

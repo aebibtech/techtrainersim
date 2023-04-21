@@ -1,0 +1,26 @@
+<h2 class="mt-2 mb-3">Learning Activities</h2>
+<table class="table">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>ID</th>
+            <th>Activity Name</th>
+            <th>Category</th>
+            <th>Reward &#11088;</th>
+            <th>Date Created</th>
+            <th>Last Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @activities.each do |activity| %>
+        <tr>
+            <td><%= activity.id %></td>
+            <td><a href="/activities/<%= activity.id %>/view"><%= activity.activity_name %></a></td>
+            <td><a href="/categories/<%= activity.category.id %>/view"><%= activity.category.category_name %></a></td>
+            <td><%= activity.reward %> &#11088;</td>
+            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<a class="btn btn-success" href="/activities/new"><i class="bi bi-plus"></i> Add new</a>

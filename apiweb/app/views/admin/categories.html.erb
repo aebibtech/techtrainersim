@@ -1,0 +1,22 @@
+<h2 class="mt-2 mb-3">Categories</h2>
+<table class="table">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>ID</th>
+            <th>Category Name</th>
+            <th>Date Created</th>
+            <th>Last Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @categories.each do |category| %>
+        <tr>
+            <td><%= category.id %></td>
+            <td><a href="/categories/<%= category.id %>/view"><%= category.category_name %></a></td>
+            <td><%= category.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= category.created_at.strftime("%b %d, %Y") %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<a class="btn btn-success" href="/categories/new"><i class="bi bi-plus"></i> Add new</a>

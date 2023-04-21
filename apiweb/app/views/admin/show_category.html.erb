@@ -1,0 +1,27 @@
+<a class="d-block mt-2 mb-3" href="/categories"><i class="bi bi-arrow-left" style="margin-right: 6px;"></i>Back to Categories</a>
+<h2 class="fs-2 mt-2" id="category_name"><%= @category.category_name %> <a class="btn btn-primary" href="/categories/<%= @category.id %>/edit">Edit</a></h2>
+<p>Date Created: <%= @category.created_at.strftime("%b %d, %Y") %></p>
+<p>Last Updated: <%= @category.updated_at.strftime("%b %d, %Y") %></p>
+<h3 class="mt-2 mb-3">Activities in this category</h3>
+<table class="table">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>ID</th>
+            <th>Activity Name</th>
+            <th>Reward &#11088;</th>
+            <th>Date Created</th>
+            <th>Last Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @category.activities.each do |activity| %>
+        <tr>
+            <td><%= activity.id %></td>
+            <td><a href="/activities/<%= activity.id %>/view"><%= activity.activity_name %></a></td>
+            <td><%= activity.reward %> &#11088;</td>
+            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

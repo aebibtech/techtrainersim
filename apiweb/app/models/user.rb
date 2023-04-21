@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
-    has_many :learning_progresses
+    has_many :learning_progresses, dependent: :destroy
     
     # Validations
     USERNAME_REGEX = /^[^0-9\s][a-zA-Z0-9_-]{3,15}$/
@@ -17,6 +17,7 @@ class User < ApplicationRecord
             if result
                 return result
             else
+                user.update_attribute("last_failed_login", DateTime.now)
                 return error_message
             end
         else

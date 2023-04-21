@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TechnologySimulator</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+        <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    </head>
+    <body class="container-fluid bg-light">
+        <main class="row">
+            <nav class="col col-md-2 bg-dark text-light vh-100 py-2 shadow shadow-lg position-fixed">
+                <h1 class="lead fw-bold fs-5 mb-3 mt-1"><a class="text-decoration-none text-light" href="/activities">TechnologySimulator</a></h1>
+                <div class="accordion accordion-flush">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#categories">Categories</button>
+                        </h2>
+                        <div id="categories" class="accordion-collapse show">
+                            <div class="accordion-body bg-dark text-light">
+                                <a class="d-block mb-3 text-light" href="/categories"><i class="bi bi-list" style="margin-right: 6px;"></i>All</a>
+                                <a class="d-block mb-3 text-light" href="/categories/new"><i class="bi bi-file-earmark-plus" style="margin-right: 6px;"></i>New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion accordion-flush">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#activities">Learning Activities</button>
+                        </h2>
+                        <div id="activities" class="accordion-collapse show">
+                            <div class="accordion-body bg-dark text-light">
+                                <a class="d-block mb-3 text-light" href="/activities"><i class="bi bi-list" style="margin-right: 6px;"></i>All</a>
+                                <a class="d-block mb-3 text-light" href="/activities/new"><i class="bi bi-file-earmark-plus" style="margin-right: 6px;"></i>New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="d-block p-3" href="/admin/logout">Log out</a>
+            </nav>
+            <section class="col col-md-2"></section>
+            <section class="col col-md-10" style="overflow-y: auto;">
+                <%= yield %>
+            </section>
+        </main>
+    </body>
+</html>

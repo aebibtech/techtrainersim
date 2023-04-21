@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-    has_many :activities
+    has_many :activities, dependent: :destroy
 
     # Validations
     CATEGORY_NAME_NO_SPECIAL_REGEX = /^[a-zA-Z0-9 ]+$/
