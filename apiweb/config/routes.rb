@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   post 'u/pregister' => 'users#process_register'
   get '/:username/profile' => 'users#profile'
   get '/:username/settings' => 'users#account_settings'
+  patch "/:username/settings" => 'users#update_account_settings'
   get 'u/forgot_password' => 'users#forgot_password'
   post 'u/pfp' => 'users#process_forgot_password'
+  patch "/:username/password" => 'users#update_password'
   get 'u/logout' => 'users#logout'
 
   # Admin routing

@@ -22,6 +22,27 @@
                     }, "json");
                     return false;
                 });
+                $("#change-password form").submit(function(){
+                    $("#password-error").html("");
+                    $("#password-success").text("");
+                    $.post($(this).attr("action"), $(this).serialize(), function(res){
+                        if(res.errors){
+                            console.log(res.errors);
+                            for(var i = 0; i < res.errors.length; i++){
+                                var err = $("<p>");
+                                err.text(res.errors[i]);
+                                err.addClass("text-danger");
+                                $("#password-error").append(err);
+                            }
+                        }else{
+                            $("#password-success").text(res.success)
+                        }
+                    }, "json");
+                    $("#opassword").val("");
+                    $("#npassword").val("");
+                    $("#cpassword").val("");
+                    return false;
+                });
             });
         </script>
     </head>
@@ -84,5 +105,24 @@
                 </div>
             </div>
       </div>
+      <div class="modal fade" id="change-password" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-light">
+                <div class="modal-body">
+                    <h4 class="modal-title text-center mb-3">Change Password</h4>
+                    <form class="w-75 p-4 mx-auto border mb-3 bg-white" action="/<%= @user.username if @user != nil %>/password" method="POST">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <input type="hidden" name="_method" value="patch">
+                        <input class="form-control mb-3" placeholder="Old Password" type="password" name="opassword" id="opassword">
+                        <input class="form-control mb-3" placeholder="New Password" type="password" name="npassword" id="npassword">
+                        <input class="form-control mb-3" placeholder="Confirm New Password" type="password" name="cpassword" id="cpassword">
+                        <input class="d-block mx-auto btn btn-danger" type="submit" value="Change">
+                    </form>
+                    <p id="password-success" class="text-success text-center"></p>
+                    <div id="password-error" class="text-danger text-center"></div>
+                </div>
+            </div>
+        </div>
+  </div>
     </body>
 </html>
