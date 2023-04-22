@@ -22,6 +22,23 @@
                     }, "json");
                     return false;
                 });
+                $("#register form").submit(function(){
+                    $("#register-error").html("");
+                    $.post($(this).attr("action"), $(this).serialize(), function(res){
+                        if(res.errors){
+                            console.log(res.errors);
+                            for(var i = 0; i < res.errors.length; i++){
+                                var err = $("<p>");
+                                err.text(res.errors[i]);
+                                err.addClass("text-danger");
+                                $("#register-error").append(err);
+                            }
+                        }else{
+                            window.location.reload();
+                        }
+                    }, "json");
+                    return false;
+                });
                 $("#change-password form").submit(function(){
                     $("#password-error").html("");
                     $("#password-success").text("");
@@ -100,6 +117,7 @@
                             <input class="form-control mb-3" placeholder="Password" type="password" name="rpassword" id="rpassword">
                             <input class="d-block mx-auto btn btn-success" type="submit" value="Create Account">
                         </form>
+                        <div id="register-error" class="text-danger text-center"></div>
                         <a class="d-block text-center mb-3" data-bs-toggle="modal" data-bs-target="#login-modal" href="#">Already have an account? Log in</a>
                     </div>
                 </div>

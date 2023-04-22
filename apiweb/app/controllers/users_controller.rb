@@ -24,6 +24,13 @@ class UsersController < ApplicationController
     end
 
     def process_register
+        user = User.new(username: params[:rusername], password: params[:rpassword], bio: "", stars: 0)
+        if user.save
+            session[:username] = user.username
+            render json: { success: "Registration is successful" }
+        else
+            render json: { errors: user.errors.full_messages }
+        end
     end
 
     def account_settings
