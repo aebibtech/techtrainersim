@@ -1,0 +1,21 @@
+<main class="row p-4">
+    <% @categories.each do |category| %>
+    <h2 class="my-4"><%= category.category_name %> (<%= category.activities.length %>)</h2>
+    <section>
+        <% category.activities.each do |act| %>
+        <a href="/learn/<%= act.id %>">
+            <span style="width: 240px; height: 260px; margin-right: 12px;" class="card shadow">
+                <% if act.image %>
+                <%= image_tag act.image, :class => "d-block" %>
+                <% else %>
+                <img class="d-block" src="/assets/placeholder.png" alt="">
+                <% end %>
+                <div class="card-body">
+                    <h3 class="text-center"><%= act.activity_name %></h3>
+                </div>
+            </span>
+        </a>
+        <% end %>
+    </section>
+    <% end %>
+</main>

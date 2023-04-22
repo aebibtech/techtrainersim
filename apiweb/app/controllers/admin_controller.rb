@@ -82,6 +82,15 @@ class AdminController < ApplicationController
         end
     end
 
+    def delete_category
+        begin
+            @category = Category.find(params[:id])
+            @category.destroy
+        rescue
+        end
+        redirect_to "/categories"
+    end
+
     def activities
         is_logged_in do
             @activities = Activity.all
