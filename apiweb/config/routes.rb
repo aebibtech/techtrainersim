@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   get '/:username/profile' => 'users#profile'
   get '/:username/settings' => 'users#account_settings'
   patch "/:username/settings" => 'users#update_account_settings'
-  get 'u/forgot_password' => 'users#forgot_password'
-  post 'u/pfp' => 'users#process_forgot_password'
+  get 'u/recover' => 'users#forgot_password1'
+  post 'u/find_account' => 'users#find_account'
+  get 'u/new_password' => 'users#forgot_password2'
+  patch 'u/update_password' => 'users#process_forgot_password'
   patch "/:username/password" => 'users#update_password'
   get 'u/logout' => 'users#logout'
 

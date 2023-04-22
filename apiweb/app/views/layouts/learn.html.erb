@@ -17,7 +17,7 @@
                             console.log(res.error);
                             $("#login-error").text(res.error);
                         }else{
-                            window.location.reload();
+                            window.location.href = "/";
                         }
                     }, "json");
                     return false;
@@ -34,7 +34,7 @@
                                 $("#register-error").append(err);
                             }
                         }else{
-                            window.location.reload();
+                            window.location.href = "/";
                         }
                     }, "json");
                     return false;
@@ -52,7 +52,7 @@
                                 $("#password-error").append(err);
                             }
                         }else{
-                            $("#password-success").text(res.success)
+                            $("#password-success").text(res.success);
                         }
                     }, "json");
                     $("#opassword").val("");
@@ -101,7 +101,7 @@
                         </form>
                         <p id="login-error" class="text-danger text-center"></p>
                         <a class="d-block text-center mb-3" data-bs-toggle="modal" data-bs-target="#register" href="#">Don't have an account yet? Register</a>
-                        <a class="d-block text-center mb-3" href="/u/forgot_password">Did you forget your password?</a>
+                        <a class="d-block text-center mb-3" href="/u/recover">Did you forget your password?</a>
                     </div>
                 </div>
             </div>
