@@ -6,8 +6,8 @@
             <th>Activity Name</th>
             <th>Category</th>
             <th>Reward &#11088;</th>
-            <th>Date Created</th>
             <th>Last Updated</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -17,8 +17,8 @@
             <td><a href="/activities/<%= activity.id %>/view"><%= activity.activity_name %></a></td>
             <td><a href="/categories/<%= activity.category.id %>/view"><%= activity.category.category_name %></a></td>
             <td><%= activity.reward %> &#11088;</td>
-            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
-            <td><%= activity.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= activity.updated_at.strftime("%b %d, %Y") %></td>
+            <td><a href="/activities/<%= activity.id %>/edit">Edit</a> <a href="/activities/<%= activity.id %>/delete">Delete</a></td>
         </tr>
         <% end %>
     </tbody>

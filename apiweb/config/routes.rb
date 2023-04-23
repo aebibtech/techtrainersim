@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'learn' => 'learn#index'
   get 'learn/:id' => 'learn#learning_activity'
+  put 'progress' => 'learn#update_progress'
 
   # Users routing
   root 'users#index'
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
   get 'activities/:id/steps/new' => 'admin#new_activity_step'
   post 'activities/:id/steps' => 'admin#create_activity_step'
   get 'activities/:id/edit' => 'admin#edit_activity'
+  get 'activities/:id/delete' => 'admin#delete_activity'
   put 'activities/:id' => 'admin#update_activity'
   get 'activitysteps/:id' => 'admin#edit_activity_step'
   put 'activitysteps/:id' => 'admin#update_activity_step'

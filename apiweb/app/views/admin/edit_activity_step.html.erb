@@ -10,7 +10,7 @@
             <label class="form-label" for="description">Description</label>
             <textarea class="form-control mb-3" style="resize: none;" name="description" id="description"><%= @as.step_description %></textarea>
             <label class="form-label" for="step_number">Step number</label>
-            <input class="form-control mb-3" type="number" min="1" name="step_number" id="step_number" value="<%= @as.step_number %>">
+            <input class="form-control mb-3" type="number" min="1" name="step_number" id="step_number" value="<%= @as.step_number %>" disabled>
             <label class="form-label" for="image">Step Image</label>
             <input class="form-control mb-3" type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif">
             <div class="mb-3">

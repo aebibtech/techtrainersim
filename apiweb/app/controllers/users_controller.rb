@@ -20,7 +20,9 @@ class UsersController < ApplicationController
     end
 
     def profile
-        @user = User.find_by_username(session[:username]) if session[:username]
+        is_logged_in do
+            @user = User.find_by_username(params[:username])
+        end
     end
 
     def process_register
