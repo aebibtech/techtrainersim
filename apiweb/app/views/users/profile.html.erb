@@ -1,2 +1,28 @@
-<h1>Users#profile</h1>
-<p>Find me in app/views/users/profile.html.erb</p>
+<main style="height: 90vh; overflow-y: auto;" class="p-2 shadow">
+    <h2 class="lead display-2"><%= @user.username %></h2>
+    <h3 class="display-4 pb-4 border-bottom">⭐ <%= @user.stars %></h3>
+    <h3 class="display-6 my-3">Learning Progress</h3>
+    <table class="table">
+        <thead class="bg-dark text-light">
+            <tr>
+                <th>Activity Name</th>
+                <th>Progress</th>
+                <th>Date Started</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @user.learning_progresses.each do |lp| %>
+                <tr>
+                    <td><a href="/learn/<%= lp.activity.activity_name.split(" ").join("-") %>"><%= lp.activity.activity_name %></a></td>
+                    <td><progress style="--webkit-appearance: none; appearance: none; border: 1px solid black;" max="100" value="<%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %>"><%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %> %</progress></td>
+                    <td><%= lp.created_at.strftime("%b %d, %Y") %></td>
+                    <td><a href="/learn/<%= lp.activity.activity_name.split(" ").join("-") %>">Continue</a></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% if @user.learning_progresses.length == 0 %>
+    <p class="lead fs-4">You have not started any learning activity yet. <a href="/learn">Start</a> one now.</p>
+    <% end %>
+</main>

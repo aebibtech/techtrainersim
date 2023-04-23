@@ -1,0 +1,50 @@
+<main class="p-2">
+    <% if flash[:success] %>
+    <p style="background-color: green;" class="p-3 rounded text-light text-center text-success mt-3"><%= flash[:success] %></p>
+    <% end %>
+    <h2 class="mt-2 mb-5">Account Settings</h2>
+    <form action="/<%= @user.username %>/settings" method="POST">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="_method" value="patch">
+        <div class="row mb-4">
+            <div class="col col-md-3 my-auto">
+                <label class="form-label" for="uusername">Username</label>
+            </div>
+            <div class="col col-md-6">
+                <input class="form-control" type="text" id="uusername" value="<%= @user.username %>" disabled>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col col-md-3 my-auto">
+                <label class="form-label" for="bio">Bio</label>
+            </div>
+            <div class="col col-md-6">
+                <textarea class="form-control" style="resize: none;" name="bio" id="bio" rows="3"><%= @user.bio %></textarea>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col col-md-3 my-auto">
+                <label class="form-label" for="password">Password</label>
+            </div>
+            <div class="col col-md-6">
+                <a class="text-danger" role="button" id="password" data-bs-toggle="modal" data-bs-target="#change-password">Change Password</a>
+            </div>
+        </div>
+        <input class="d-block mt-5 btn btn-success" type="submit" value="Save">
+    </form>
+</main>
+<style>
+    main form{
+        width: 50%!important;
+    }
+    @media screen and (max-width: 500px){
+        main form{
+            width: 100%!important;
+        }
+    }
+    @media screen and (max-width: 720px){
+        main form{
+            width: 75%!important;
+        }
+    }
+</style>

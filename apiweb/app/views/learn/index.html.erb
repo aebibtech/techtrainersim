@@ -1,0 +1,22 @@
+<main class="row p-4">
+    <% @categories.each do |category| %>
+    <h2 class="my-4"><%= category.category_name %> (<%= category.activities.length %>)</h2>
+    <section>
+        <% category.activities.each do |act| %>
+        <span style="width: 240px; height: 280px; margin-right: 16px; overflow-y: hidden;" class="d-inline-block card shadow">
+            <a class="d-block text-decoration-none text-dark" href="/learn/<%= act.activity_name.split(" ").join("-") %>">
+            <% if act.image %>
+                <%= image_tag act.image, :class => "card-img-top" %>
+            <% else %>
+                <img class="d-block" src="/assets/placeholder.png" alt="">
+            <% end %>
+                <div class="card-body">
+                    <h5 class="card-title"><%= act.activity_name %></h5>
+                    <p class="card-text"><%= act.description %></p>
+                </div>
+            </a>
+        </span>
+        <% end %>
+    </section>
+    <% end %>
+</main>

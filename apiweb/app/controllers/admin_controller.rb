@@ -3,8 +3,9 @@ class AdminController < ApplicationController
     def index
         if session[:username] != nil
             redirect_to "/activities"
+        else
+            render layout: "admin"
         end
-        render layout: "admin"
     end
 
     def process_login
@@ -13,11 +14,16 @@ class AdminController < ApplicationController
         else
             result = User.login(params[:username], params[:password])
             if result.kind_of? String
-                session[:error] = result
+                flash[:error] = result
                 redirect_to "/admin"
             else
-                session[:username] = result.username
-                redirect_to "/activities"
+                if result.user_level == 9
+                    session[:username] = result.username
+                    redirect_to "/activities"
+                else
+                    session.clear
+                    redirect_to "/admin"
+                end
             end
         end
     end
@@ -75,6 +81,15 @@ class AdminController < ApplicationController
                 redirect_to "/categories"
             end
         end
+    end
+
+    def delete_category
+        begin
+            @category = Category.find(params[:id])
+            @category.destroy
+        rescue
+        end
+        redirect_to "/categories"
     end
 
     def activities
@@ -146,6 +161,15 @@ class AdminController < ApplicationController
         end
     end
 
+    def delete_activity
+        begin
+            @activity = Activity.find(params[:id])
+            @activity.destroy
+        rescue
+        end
+        redirect_to "/activities"
+    end
+
     def new_activity_step
         is_logged_in do
             @activity = Activity.find(params[:id])
@@ -154,11 +178,13 @@ class AdminController < ApplicationController
 
     def create_activity_step
         is_logged_in do
+            activity = Activity.find(params[:id])
+            next_step_number = activity.activity_steps.maximum('step_number') ? activity.activity_steps.maximum('step_number').to_i + 1 : "1"
             create_params = {
                 step_name: params[:step_name],
                 step_description: params[:description],
-                step_number: params[:step_number],
-                activity: Activity.find(params[:id]),
+                step_number: next_step_number,
+                activity: activity,
                 image: params[:image]
             }
             @activity_step = ActivityStep.new(create_params)
@@ -186,7 +212,7 @@ class AdminController < ApplicationController
             begin
                 @as = ActivityStep.find(params[:id])
                 @as.step_name = params[:step_name]
-                @as.step_number = params[:step_number]
+                @as.step_number = @as.step_number
                 @as.step_description = params[:description]
                 @as.image.attach(params[:image]) if params[:image]
                 if @as.save

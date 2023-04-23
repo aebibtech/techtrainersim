@@ -66,9 +66,9 @@ class Api::V1::UsersController < ApiController
     def login
         @result = User.login(params[:username], params[:password])
         if @result.kind_of? String
-            render json: { message: @result }
+            render json: { error: @result }
         else
-            render json: @result
+            render json: @result.username
         end
     end
 end

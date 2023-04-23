@@ -1,0 +1,93 @@
+<main class="row p-3">
+    <div class="row">
+        <div class="col col-md-8">
+            <h2 class="mb-3"><%= @la.activity_name %></h2>
+            <nav class="d-flex justify-content-between">
+                <a id="prev" class="my-auto btn btn-success">&#8592; Previous Step</a>
+                <span class="fs-3" id="step_name"></span>
+                <a id="next" class="my-auto btn btn-success">Next Step &#8594;</a>
+            </nav>
+            <% @la.activity_steps.each do |ast| %>
+            <figure class="steps mt-3" id="step<%= ast.step_number.to_s %>" data-desc="<%= ast.step_description %>">
+                <%= image_tag ast.image, :alt => ast.step_name, :class => "w-100", :style => "height: 420px;" %>
+            </figure>
+            <% end %>
+        </div>
+        <div class="col p-4 shadow">
+            <h3 class="fs-2">Step description</h3>
+            <p class="lead fs-3" id="step-desc"></p>
+            <h4 class="fs-3">About this activity</h4>
+            <p class="lead fs-3"><%= @la.description %></p>
+            <p class="fw-bold fs-4">Finish this activity to get <%= @la.reward %>&#11088;</p>
+        </div>
+    </div>
+</main>
+<p class="d-none" id="current_step"><%= @lp != nil ? @lp.current_step : 1 %></p>
+<form class="d-none" id="metadata">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="activity_id" value="<%= @la.id %>">
+    <input type="hidden" name="current_step" id="current_step_h" value="">
+</form>
+<div class="modal fade" id="congrats" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-light">
+            <div class="modal-body">
+                <h1 class="text-center">Congratulations! 👏🎉</h1>
+                <p class="text-center lead fs-3"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    @media screen and (max-width: 879px) {
+        .shadow{
+            display: none!important;
+        }
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        console.log("From learning activity.");
+        function updateStep(){
+            $(".steps").addClass("d-none");
+            $("#step" + $("#current_step").text()).removeClass("d-none");
+            $("#step_name").text("Step " + $("#current_step").text() + ": " + $("#step" + $("#current_step").text() + " img").attr("alt"));
+            $("#step-desc").text($("#step" + $("#current_step").text()).attr("data-desc"));
+            $("#current_step_h").val($("#current_step").text());
+        }
+
+        updateStep();
+        
+        $("#prev").click(function(){
+            if(Number($("#current_step").text()) === 1){
+                return;
+            }
+            $("#current_step").text(Number($("#current_step").text()) - 1);
+            updateStep();
+        });
+        
+        $("#next").click(function(){
+            if(Number($("#current_step").text()) === $(".steps").length){
+                return;
+            }
+            $("#current_step").text(Number($("#current_step").text()) + 1);
+            updateStep();
+            if($("#logged-in").text() === "true"){
+                console.log($("#metadata").serialize());
+                $.ajax({
+                    url: "/progress",
+                    method: "PUT",
+                    data: $("#metadata").serialize(),
+                    success: function(res){
+                        console.log("Response from learning progress update:", res);
+                        if(res.completed){
+                            $("#congrats div.modal-body p").text("You have finished <%= @la.activity_name %>! You have received " + res.reward + " stars! ❤️");
+                            new bootstrap.Modal(document.getElementById("congrats")).show();
+                            $("#user-stars").text(Number($("#user-stars").text()) + res.reward);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

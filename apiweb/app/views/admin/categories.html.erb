@@ -6,6 +6,7 @@
             <th>Category Name</th>
             <th>Date Created</th>
             <th>Last Updated</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +15,8 @@
             <td><%= category.id %></td>
             <td><a href="/categories/<%= category.id %>/view"><%= category.category_name %></a></td>
             <td><%= category.created_at.strftime("%b %d, %Y") %></td>
-            <td><%= category.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= category.updated_at.strftime("%b %d, %Y") %></td>
+            <td><a href="/categories/<%= category.id %>/edit">Edit</a> <a href="/categories/<%= category.id %>/delete">Delete</a></td>
         </tr>
         <% end %>
     </tbody>
