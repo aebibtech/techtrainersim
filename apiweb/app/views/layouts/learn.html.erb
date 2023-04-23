@@ -7,7 +7,7 @@
         <%= csp_meta_tag %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-        <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             $(document).ready(function(){
                 console.log("Document is ready.");
@@ -17,7 +17,7 @@
                             console.log(res.error);
                             $("#login-error").text(res.error);
                         }else{
-                            window.location.href = "/";
+                            window.location.reload();
                         }
                     }, "json");
                     return false;
@@ -66,7 +66,7 @@
     <body class="container-fluid bg-light">
         <header class="bg-white fixed-top">
             <nav class="navbar px-2">
-                <a class="navbar-brand" href="/learn">TechnologySimulator</a>
+                <a style="font-family: monospace;" class="navbar-brand" href="/learn">TechnologySimulator</a>
                 <% if @user != nil %>
                 <span style="width: 120px;" class="d-flex justify-content-between">
                     <span>&#11088; <%= @user.stars %></span>

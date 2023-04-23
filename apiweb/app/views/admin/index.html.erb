@@ -8,5 +8,8 @@
         <label class="row form-label" for="password">Password</label>
         <input class="row form-control mb-3" type="password" name="password" id="pasword">
         <p class="text-center"><input class="btn btn-success w-25" type="submit" value="Log in"></p>
+        <% if flash[:error] != nil %>
+        <p class="text-danger text-center"><%= flash[:error] %></p>
+        <% end %>
     </form>
 </main>

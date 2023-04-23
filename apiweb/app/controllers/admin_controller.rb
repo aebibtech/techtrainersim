@@ -13,7 +13,7 @@ class AdminController < ApplicationController
         else
             result = User.login(params[:username], params[:password])
             if result.kind_of? String
-                session[:error] = result
+                flash[:error] = result
                 redirect_to "/admin"
             else
                 if result.user_level == 9

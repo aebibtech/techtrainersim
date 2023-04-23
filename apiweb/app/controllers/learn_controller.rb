@@ -6,5 +6,10 @@ class LearnController < ApplicationController
 
     def learning_activity
         @user = User.find_by_username(session[:username]) if session[:username] != nil
+        begin
+            @la = Activity.find(params[:id])
+        rescue
+            redirect_to "/learn"
+        end
     end
 end

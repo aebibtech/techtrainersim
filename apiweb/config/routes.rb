@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'learn' => 'learn#index'
-  get 'learn/learning_activity'
+  get 'learn/:id' => 'learn#learning_activity'
 
   # Users routing
   root 'users#index'
