@@ -1,8 +1,10 @@
 <main class="row p-4">
     <% @categories.each do |category| %>
+    <% if category.activities.length > 0 %>
     <h2 class="my-4"><%= category.category_name %> (<%= category.activities.length %>)</h2>
     <section>
         <% category.activities.each do |act| %>
+        <% if act.activity_steps.length > 0 %>
         <span style="width: 240px; height: 280px; margin-right: 16px; overflow-y: hidden;" class="d-inline-block card shadow">
             <a class="d-block text-decoration-none text-dark" href="/learn/<%= act.activity_name.split(" ").join("-") %>">
             <% if act.image %>
@@ -17,6 +19,8 @@
             </a>
         </span>
         <% end %>
+        <% end %>
     </section>
+    <% end %>
     <% end %>
 </main>
