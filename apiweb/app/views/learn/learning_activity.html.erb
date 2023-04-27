@@ -18,7 +18,11 @@
             <p class="lead fs-3" id="step-desc"></p>
             <h4 class="fs-3">About this activity</h4>
             <p class="lead fs-3"><%= @la.description %></p>
+            <% if session[:username] != nil %>
             <p class="fw-bold fs-4">Finish this activity to get <%= @la.reward %>&#11088;</p>
+            <% else %>
+            <p class="fs-4"><a href="" data-bs-toggle="modal" data-bs-target="#login">Log in</a> to get rewards for completing this activity.</p>
+            <% end %>
         </div>
     </div>
 </main>
