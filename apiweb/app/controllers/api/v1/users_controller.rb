@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApiController
             }
             render json: @to_render
         else
-            head 404
+            render json: { error: "User not found", status: 404 }
         end
     end
 
@@ -20,9 +20,33 @@ class Api::V1::UsersController < ApiController
         @user = User.find_by_username(params[:username])
         if @user != nil
             @learning_progresses = LearningProgress.where(user: @user).order("updated_at DESC")
-            render json: @learning_progresses
+            render json: @learning_progresses.as_json
         else
-            head 404
+            render json: { error: "User not found", status: 404 }
+        end
+    end
+
+    def update_learning_progress
+        @user = User.find(params[:user_id])
+        @act = Activity.find(params[:activity_id])
+        completion = false
+        reward = 0
+        if @user != nil
+            @learn_prog = LearningProgress.find_by(user: @user, activity: @act)
+            if params[:current_step].to_i > @learn_prog.current_step
+                @learn_prog.current_step = params[:current_step].to_i
+                if @learn_prog.current_step == @learn_prog.activity.activity_steps.length
+                    @learn_prog.is_completed = true
+                    @user.update_attribute("stars", @user.stars + @learn_prog.activity.reward)
+                end
+                @learn_prog.save
+                @learn_prog.reload
+                if @learn_prog.is_completed
+                    completion = true
+                    reward = @learn_prog.activity.reward
+                end
+            end
+            render json: { completed: completion, reward: reward }
         end
     end
 
@@ -39,9 +63,9 @@ class Api::V1::UsersController < ApiController
         if @user.save
             create_params.delete(:password)
             create_params[:id] = @user.id
-            render json: create_params
+            render json: { status: 'success' }
         else
-            render json: { errors: @user.errors.full_messages }
+            render json: { errors: @user.errors.full_messages.join(" ") }
         end
     end
 
@@ -57,7 +81,7 @@ class Api::V1::UsersController < ApiController
     def update_stars
         @user = User.find_by_username(params[:username])
         if @user != nil
-            @user.update_attribute("stars", params[:stars])
+            @user.update_attribute("stars", @user.stars + params[:stars].to_i)
         else
             head 404
         end
@@ -68,7 +92,13 @@ class Api::V1::UsersController < ApiController
         if @result.kind_of? String
             render json: { error: @result }
         else
-            render json: @result.username
+            render json: { data: @result.as_json, status: 'success' }
         end
+    end
+
+    def account_recovery
+    end
+
+    def change_password
     end
 end

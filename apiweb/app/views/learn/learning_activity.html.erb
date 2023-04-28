@@ -3,9 +3,9 @@
         <div class="col col-md-8">
             <h2 class="mb-3"><%= @la.activity_name %></h2>
             <nav class="d-flex justify-content-between">
-                <a id="prev" class="my-auto btn btn-success">&#8592; Previous Step</a>
+                <a id="prev" class="my-auto btn btn-success"><</a>
                 <span class="fs-3" id="step_name"></span>
-                <a id="next" class="my-auto btn btn-success">Next Step &#8594;</a>
+                <a id="next" class="my-auto btn btn-success">></a>
             </nav>
             <% @la.activity_steps.each do |ast| %>
             <figure class="steps mt-3" id="step<%= ast.step_number.to_s %>" data-desc="<%= ast.step_description %>">
@@ -18,7 +18,11 @@
             <p class="lead fs-3" id="step-desc"></p>
             <h4 class="fs-3">About this activity</h4>
             <p class="lead fs-3"><%= @la.description %></p>
+            <% if session[:username] != nil %>
             <p class="fw-bold fs-4">Finish this activity to get <%= @la.reward %>&#11088;</p>
+            <% else %>
+            <p class="fs-4"><a href="" data-bs-toggle="modal" data-bs-target="#login">Log in</a> to get rewards for completing this activity.</p>
+            <% end %>
         </div>
     </div>
 </main>

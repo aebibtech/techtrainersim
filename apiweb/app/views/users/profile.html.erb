@@ -15,7 +15,7 @@
             <% @user.learning_progresses.each do |lp| %>
                 <tr>
                     <td><a href="/learn/<%= lp.activity.activity_name.split(" ").join("-") %>"><%= lp.activity.activity_name %></a></td>
-                    <td><progress style="--webkit-appearance: none; appearance: none; border: 1px solid black;" max="100" value="<%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %>"><%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %> %</progress></td>
+                    <td><progress style="--webkit-appearance: none; appearance: none; border: 1px solid black;" max="100" value="<%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %>"><%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %> %</progress> <%= (lp.current_step.to_f / lp.activity.activity_steps.length.to_f * 100).round(2) %> %</td>
                     <td><%= lp.created_at.strftime("%b %d, %Y") %></td>
                     <td><a href="/learn/<%= lp.activity.activity_name.split(" ").join("-") %>">Continue</a></td>
                 </tr>
