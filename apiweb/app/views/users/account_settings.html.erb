@@ -2,8 +2,11 @@
     <% if flash[:success] %>
     <p style="background-color: green;" class="p-3 rounded text-light text-center text-success mt-3"><%= flash[:success] %></p>
     <% end %>
-    <h2 class="mt-2 mb-5">Account Settings</h2>
-    <form action="/<%= @user.username %>/settings" method="POST">
+    <form class="mt-2" action="/<%= @user.username %>/settings" method="POST">
+        <h2 class="row mb-5">
+            <span class="col col-md-7">Account Settings</span>
+            <input class="col col-md-2 btn btn-success" type="submit" value="Save">
+        </h2>
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <input type="hidden" name="_method" value="patch">
         <div class="row mb-4">
@@ -30,7 +33,6 @@
                 <a class="text-danger" role="button" id="password" data-bs-toggle="modal" data-bs-target="#change-password">Change Password</a>
             </div>
         </div>
-        <input class="d-block mt-5 btn btn-success" type="submit" value="Save">
     </form>
 </main>
 <style>
